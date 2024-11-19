@@ -1,0 +1,47 @@
+// schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL") // This will read the DB URL from your .env file
+}
+
+model User {
+  id            Int            @id @default(autoincrement())  
+  name          String         
+  flashcardSets FlashcardSet[] 
+  createdAt     DateTime       @default(now()) 
+  updatedAt     DateTime       @default(now()) @updatedAt 
+}
+
+model FlashcardSet {
+  id            Int            @id @default(autoincrement()) 
+  title         String         
+  userId        Int            
+  user          User           @relation(fields: [userId], references: [id]) 
+  flashcards    Flashcard[]    
+  collections   Collection[]   @relation("FlashcardSetCollection") 
+  createdAt     DateTime       @default(now()) 
+  updatedAt     DateTime       @default(now()) @updatedAt 
+}
+
+model Flashcard {
+  id          Int          @id @default(autoincrement()) 
+  question    String      
+  answer      String      
+  flashcardSet FlashcardSet @relation(fields: [flashcardSetId], references: [id]) 
+  flashcardSetId Int       
+  createdAt   DateTime     @default(now()) 
+  updatedAt   DateTime     @default(now()) @updatedAt 
+}
+
+model Collection {
+  id            Int            @id @default(autoincrement()) 
+  title         String        
+  flashcardSets FlashcardSet[] @relation("FlashcardSetCollection") 
+  createdAt     DateTime       @default(now()) 
+  updatedAt     DateTime       @default(now()) @updatedAt 
+}
