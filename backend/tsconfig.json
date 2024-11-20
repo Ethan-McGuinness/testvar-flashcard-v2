@@ -9,6 +9,6 @@
     "skipLibCheck": true, // Skip type checking of declaration files.
     "forceConsistentCasingInFileNames": true // Ensure consistent file casing.
   },
-  "include": ["src/**/*.ts"], // Include all TS files under the src folder.
-  "exclude": ["node_modules"] // Exclude the node_modules folder.
+  "include": ["src/**/*.ts", "src/types/**/*.d.ts"],  // Ensure types are included
+  "exclude": ["node_modules"]
 }
