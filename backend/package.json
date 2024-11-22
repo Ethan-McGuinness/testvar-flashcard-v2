@@ -25,6 +25,7 @@
     "@prisma/client": "^5.22.0",
     "bcryptjs": "^2.4.3",
     "jsonwebtoken": "^9.0.2",
-    "restify": "^11.1.0"
+    "restify": "^11.1.0",
+    "restify-router": "^0.6.2"
   }
 }

@@ -1,11 +1,16 @@
 import restify from 'restify';
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import authRoutes from './routes/authRoutes';
+
 
 const server = restify.createServer();
 const prisma = new PrismaClient();
 
 // Middleware to parse request bodies
+server.use(restify.plugins.bodyParser());
+
 server.use(restify.plugins.bodyParser());
 
 // Root route
