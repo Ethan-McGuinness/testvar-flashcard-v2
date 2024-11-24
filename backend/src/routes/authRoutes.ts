@@ -1,19 +1,20 @@
-import { Router } from 'restify-router';
+import { Request, Response, Next } from 'restify';
 import { loginUser } from '../controllers/authContoller';
 import { authenticate } from '../middleware/authenticate';
 
-const authRoutes = new Router();
+export function registerAuthRoutes(server: any) {
+  // Login route
+  server.post('/auth/login', (req: Request, res: Response, next: Next) => {
+    loginUser(req, res, next);
+  });
 
-authRoutes.post('/login', loginUser);
-
-// Example protected route
-authRoutes.get('/protected', authenticate, (req, res, next) => {
-  if (req.user) {
-    res.send(200, { message: `Welcome ${req.user.username}, Admin: ${req.user.admin}` });
-  } else {
-    res.send(401, { message: 'Unauthorized access' });
-  }
-  return next();
-});
-
-export default authRoutes;
+  // Example protected route
+  server.get('/protected', authenticate, (req: any, res: Response, next: Next) => {
+    if (req.user) {
+      res.send(200, { message: `Welcome ${req.user.username}, Admin: ${req.user.admin}` });
+    } else {
+      res.send(401, { message: 'Unauthorized access' });
+    }
+    return next();
+  });
+}

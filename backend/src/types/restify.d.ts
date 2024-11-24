@@ -1,12 +1,12 @@
-// restify.d.ts
-import { User } from '@prisma/client';
+import { Request } from 'restify';
 
 declare module 'restify' {
-  interface Request {
-    user?: {
+ export  interface Request {
+    user?: { 
       userId: number; 
-      username: string;  // the ID from the decoded JWT
-      admin: boolean;  // the admin status from the decoded JWT
+      username: string; 
+      admin: boolean;
     };
   }
 }
+

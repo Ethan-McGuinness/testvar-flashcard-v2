@@ -16,12 +16,14 @@ export const loginUser = async (req: Request, res: Response, next: Next) => {
 
         if (!user) {
             res.send(404,{message: 'User not found'});
+            console.log('username not found');
             return next();
         }
 
         const passwordMatch = await bcrypt.compare(password,user.password);
         if (!passwordMatch) {
             res.send(401, {message: 'invalid Password'});
+            console.log('password invalid');
             return next();
         }
 
