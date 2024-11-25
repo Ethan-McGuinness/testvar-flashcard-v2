@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
-const HomePage = () => {
-  const [user, setUser] = useState(null);
+// Define an interface for the user data structure
+interface User {
+  username: string;
+  admin: boolean;
+}
+
+const HomePage: React.FC = () => {
+  const [user, setUser] = useState<User | null>(null); // User can be of type User or null
 
   useEffect(() => {
     // Simulate an API call to get user data using the token
@@ -10,7 +16,7 @@ const HomePage = () => {
       // This could be an API request, but here we just mock it
       setUser({ username: 'Test User', admin: true }); // Mock user data
     }
-  }, []);
+  }, []); // Empty dependency array ensures it runs once when the component mounts
 
   return (
     <div>
