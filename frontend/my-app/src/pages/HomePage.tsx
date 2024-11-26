@@ -8,46 +8,43 @@ const HomePage: React.FC = () => {
       {/* Navbar */}
       <nav>
         <ul>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/about">About</Link></li>
-          <li><Link to="/features">Features</Link></li>
-          {/* Add more links as needed */}
+          <li><Link to="/flashcards">View your Flashcard</Link></li>
+          <li><Link to="/create">Create Flashcards</Link></li>
+          <li><Link to="/browse">Browse Flashcards</Link></li>
+          <li><Link to="/">log Out</Link></li>
         </ul>
       </nav>
 
-      {/* Hero Section */}
-      <header>
-        <h1>Welcome to TestVars-Flashcards</h1>
-        <p>The best way for you to study.</p>
-      </header>
-
       {/* Main Content */}
-      <section>
-        <h2>Features</h2>
-        <div>
+      <main>
+        <header>
+          <h1>Welcome to TestVars-Flashcards</h1>
+          <p>The best way for you to study.</p>
+        </header>
+
+        <section>
+          <h2>Features</h2>
           <div>
-            <h3>Feature 1</h3>
-            <p>Explanation of feature 1.</p>
+            <div>
+              <h3>View Your Flashcards</h3>
+              <li><Link to="/flashcards">View all your Flashcard</Link></li>
+            </div>
+            <div>
+              <h3>Create Flashcards</h3>
+              <li><Link to="/create">Create Flashcards to add to your collection</Link></li>
+            </div>
+            <div>
+              <h3>Browse Flashcards</h3>
+              <li><Link to="/browse">Browse others flashcards to add to your collection</Link></li>
+            </div>
           </div>
-          <div>
-            <h3>Feature 2</h3>
-            <p>Explanation of feature 2.</p>
-          </div>
-          <div>
-            <h3>Feature 3</h3>
-            <p>Explanation of feature 3.</p>
-          </div>
-        </div>
-      </section>
+        </section>
+      </main>
 
       {/* Footer */}
       <footer>
         <p>&copy; 2024 [TestVars-Flashcards]. All rights reserved.</p>
-        <ul>
-          <li><Link to="/privacy-policy">Privacy Policy</Link></li>
-          <li><Link to="/terms">Terms of Service</Link></li>
-          <li><Link to="/contact">Contact</Link></li>
-        </ul>
+      
       </footer>
     </div>
   );
