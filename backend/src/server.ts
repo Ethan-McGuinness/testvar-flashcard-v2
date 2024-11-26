@@ -3,11 +3,45 @@ import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { registerAuthRoutes } from './routes/authRoutes';
+import corsMiddleware, { CorsMiddleware } from 'restify-cors-middleware2';
 
-
-
-const server = restify.createServer();
+const server = restify.createServer({
+  name: 'API',
+  version: '1.0.0',
+});
 const prisma = new PrismaClient();
+
+const cors: corsMiddleware.CorsMiddleware = corsMiddleware({
+  origins: ['*'],
+  allowHeaders: ['Authorization', 'Content-Type'],
+  // exposeHeaders: ['Authorization'],
+});
+
+server.pre(cors.preflight);
+server.use(cors.actual);
+
+// server.opts('/*', (req, res, next) => {
+//   res.header('Access-Control-Allow-Origin', '*');
+//   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+//   res.header('Access-Control-Allow-Headers', 'Authorization, Content-Type');
+//   res.send(200);
+//   return next();
+// });
+
+// Add CORS Middleware
+// server.use((req, res, next) => {
+//   res.setHeader('Access-Control-Allow-Origin', '*'); // Allow requests from frontend
+//   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS'); // Allowed methods
+//   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Allowed headers
+//   res.setHeader('Access-Control-Allow-Credentials', 'true'); // Allow cookies or auth headers
+  
+//   // Handle preflight (OPTIONS) requests
+//   if (req.method === 'OPTIONS') {
+//     res.send(204); // No content for preflight
+//     return next(false);
+//   }
+//   return next();
+// });
 
 // Middleware to parse request bodies
 server.use(restify.plugins.bodyParser());

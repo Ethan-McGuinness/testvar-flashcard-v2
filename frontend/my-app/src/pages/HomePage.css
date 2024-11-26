@@ -1,0 +1,43 @@
+/* HomePage.css */
+nav ul {
+    display: flex;
+    list-style-type: none;
+    justify-content: space-around;
+    background-color: #5da3dd;
+    padding: 10px;
+  }
+  
+  nav ul li {
+    font-size: 18px;
+  }
+  
+  header {
+    text-align: center;
+    padding: 50px;
+    background-color: #5ebfe6;
+    color: white;
+  }
+  
+  header button {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin-top: 20px;
+  }
+  
+  section {
+    padding: 20px;
+  }
+  
+  section div {
+    margin-bottom: 20px;
+  }
+  
+  footer {
+    text-align: center;
+    padding: 30px;
+    width: 1500px;
+    bottom: 0px;
+    background-color: #525050;
+    color: white;
+  }
+  
