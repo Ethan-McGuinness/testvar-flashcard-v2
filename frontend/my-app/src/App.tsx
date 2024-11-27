@@ -4,6 +4,7 @@ import LoginPage from './pages/LoginPage'; // Import LoginPage component
 import HomePage from './pages/HomePage';
 import BrowseFlashcards from './pages/ViewFlashcards';
 import ViewFlashcards from './pages/ViewFlashcards';
+import ViewSet from './pages/ViewSet';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <Route path="/" element={<LoginPage />} /> 
           <Route path="/home" element={<HomePage />} /> 
           <Route path="/flashcards" element={< ViewFlashcards/>} />
+          <Route path="/sets/:setId/cards" element={<ViewSet/>} />
         </Routes>
       </div>
     </Router>

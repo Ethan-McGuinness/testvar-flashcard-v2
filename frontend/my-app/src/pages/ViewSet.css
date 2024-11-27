@@ -1,0 +1,65 @@
+/* ViewSet.css */
+.view-set {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: #f4f6f8;
+  }
+  
+  header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  header h1 {
+    color: #004d99;
+    font-size: 2rem;
+  }
+  
+  .flashcard-list {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .flashcard {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .flashcard h3 {
+    margin: 0 0 10px 0;
+    color: #333;
+  }
+  
+  .flashcard p {
+    color: #666;
+  }
+  
+  .flashcard-actions {
+    margin-top: 10px;
+  }
+  
+  .flashcard-actions button {
+    padding: 10px 15px;
+    border: none;
+    background-color: #004d99;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+  }
+  
+  .flashcard-actions button:hover {
+    background-color: #003366;
+  }
+  
+  footer {
+    text-align: center;
+    margin-top: 40px;
+    color: #999;
+    font-size: 0.9rem;
+  }
+  

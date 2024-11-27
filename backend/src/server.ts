@@ -20,28 +20,7 @@ const cors: corsMiddleware.CorsMiddleware = corsMiddleware({
 server.pre(cors.preflight);
 server.use(cors.actual);
 
-// server.opts('/*', (req, res, next) => {
-//   res.header('Access-Control-Allow-Origin', '*');
-//   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-//   res.header('Access-Control-Allow-Headers', 'Authorization, Content-Type');
-//   res.send(200);
-//   return next();
-// });
 
-// Add CORS Middleware
-// server.use((req, res, next) => {
-//   res.setHeader('Access-Control-Allow-Origin', '*'); // Allow requests from frontend
-//   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS'); // Allowed methods
-//   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Allowed headers
-//   res.setHeader('Access-Control-Allow-Credentials', 'true'); // Allow cookies or auth headers
-  
-//   // Handle preflight (OPTIONS) requests
-//   if (req.method === 'OPTIONS') {
-//     res.send(204); // No content for preflight
-//     return next(false);
-//   }
-//   return next();
-// });
 
 // Middleware to parse request bodies
 server.use(restify.plugins.bodyParser());
@@ -78,21 +57,28 @@ server.get('/sets', async (req, res, next) => {
 // Create a new flashcard set
 server.post('/sets', async (req, res, next) => {
   try {
-    const { name, userId } = req.body;
+    const { name, userId, flashcards, collections } = req.body;
 
-    if (!name || !userId) {
-      res.send(400, { message: 'Name and User ID are required' });
+    if (!name || !userId || !flashcards || !collections) {
+      res.send(400, { message: 'Name, User ID, flashcards, and collections are required' });
       return next();
     }
 
+    // Create the flashcard set and link it to collections
     const newFlashcardSet = await prisma.flashcardSet.create({
       data: {
-        name,    
-        userId,  
+        name,
+        userId,
+        flashcards: {
+          create: flashcards,  // Create flashcards from the provided data
+        },
+        Collection: {
+          connect: collections.map((col: { id: number }) => ({ id: col.id })), // Connect to collections
+        },
       },
     });
 
-    res.send(201, newFlashcardSet);
+    res.send(201, newFlashcardSet); 
   } catch (error) {
     res.send(500, { message: 'Error creating flashcard set', error });
   }
@@ -100,26 +86,32 @@ server.post('/sets', async (req, res, next) => {
   return next();
 });
 
-//get flashcard set by id
+
+
+// Get flashcard set by ID, including flashcards and collections
 server.get('/sets/:setId', async (req, res, next) => {
   try {
-    const { setId } = req.params; 
+    const { setId } = req.params;
 
-    
     const flashcardSet = await prisma.flashcardSet.findUnique({
       where: { id: Number(setId) },
+      include: {
+        flashcards: true,  // Include flashcards
+        Collection: true   // Include associated collections
+      },
     });
 
     if (!flashcardSet) {
       res.send(404, { message: 'Flashcard set not found' });
     } else {
-      res.send(flashcardSet); // Return the found flashcard set
+      res.send(flashcardSet);  // Return the found flashcard set, with flashcards and collections
     }
   } catch (error) {
     res.send(500, { message: 'Error retrieving flashcard set', error });
   }
   return next();
 });
+
 
 //update flashcard set by id
 server.put('/sets/:setId', async (req, res, next) => {
@@ -419,6 +411,9 @@ server.get('/users/:userId/collections', async (req, res, next) => {
       where: {
         userId: Number(userId), 
       },
+      include: {
+        flashcardSets: true,
+      }
     });
 
     res.send(collections); 
@@ -543,8 +538,3 @@ server.del('/cards/:cardId', async (req, res, next) => {
 
   return next();
 });
-
-
-
-
-
