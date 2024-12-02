@@ -38,6 +38,7 @@ model Flashcard {
   question     String
   answer       String
   difficulty   String
+  hiddenState  Boolean       @default(false)
   flashcardSet FlashcardSet  @relation(fields: [flashcardSetId], references: [id])
   flashcardSetId Int
   createdAt    DateTime      @default(now())
