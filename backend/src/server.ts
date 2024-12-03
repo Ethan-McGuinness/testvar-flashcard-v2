@@ -20,19 +20,19 @@ const cors: corsMiddleware.CorsMiddleware = corsMiddleware({
 server.pre(cors.preflight);
 server.use(cors.actual);
 
-
-
 // Middleware to parse request bodies
 server.use(restify.plugins.bodyParser());
 
 // Register the authRoutes
 registerAuthRoutes(server);
 
-// Root route
+
 server.get('/', (req, res, next) => {
   res.send({ message: 'API is running' });
   return next();
 });
+
+
 
 // Start the server
 server.listen(5000, () => {
@@ -538,3 +538,24 @@ server.del('/cards/:cardId', async (req, res, next) => {
 
   return next();
 });
+
+//update flashcard hidden state
+server.patch('/cards/:cardId/hidden', async (req,res,next)=> {
+  const {cardId} = req.params;
+  const {hiddenState} = req.body;
+
+  try{
+    const updatedCard = await prisma.flashcard.update({
+      where: {
+        id: parseInt(cardId),
+      },
+      data: {
+        hiddenState,
+      },
+    });
+    res.send(200, {message: 'flashcard hidden state updated successfully', updatedCard})
+  }catch (error){
+    res.send(500, {message: 'error updating hidden state', error});
+  }
+  return next();
+})
