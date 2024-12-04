@@ -169,6 +169,24 @@ server.get('/sets/:setId/cards', async (req, res, next) => {
   return next();
 });
 
+//get all flaschards by userId
+server.get('/users/:userId/flashcardSets', async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+
+    const flashcardSets = await prisma.flashcardSet.findMany({
+      where: {
+        userId: Number(userId), 
+      },
+    });
+
+    res.send(flashcardSets); 
+  } catch (error) {
+    res.send(500, { message: 'Error retrieving flashcard sets for user', error });
+  }
+  return next();
+});
+
 
 
 

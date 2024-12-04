@@ -1,0 +1,72 @@
+/* Container */
+.form-container {
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    margin-top: 20px;
+    
+  }
+  
+  /* Buttons Container */
+  .toggle-buttons {
+    display: flex;
+    justify-content: space-between; /* Space evenly */
+    margin-bottom: 20px;
+    text-emphasis-color: white;
+  }
+  
+  /* Individual Buttons */
+  .toggle-buttons button {
+    flex: 1; /* Make buttons take equal space */
+    margin-right: 10px;
+    padding: 10px 20px;
+    border: none;
+    background-color: white;
+    color: black;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .toggle-buttons button:hover {
+    background-color: gray;
+  }
+  
+  /* Remove right margin for the last button */
+  .toggle-buttons button:last-child {
+    margin-right: 0;
+  }
+  
+  /* Form Inputs */
+  form div {
+    margin-bottom: 15px;
+  }
+  
+  form label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  form input, form select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  /* Success and Error Messages */
+  form p {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  form p.success {
+    background-color: #d4edda;
+    color: #155724;
+  }
+  
+  form p.error {
+    background-color: #f8d7da;
+    color: #721c24;
+  }
+  
