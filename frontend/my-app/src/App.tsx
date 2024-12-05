@@ -5,6 +5,7 @@ import HomePage from './pages/HomePage';
 import ViewFlashcards from './pages/ViewFlashcards';
 import ViewSet from './pages/ViewSet';
 import CreatePage from './pages/CreatePage'; // Import CreatePage component
+import BrowsePage from './pages/BrowsePage';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/flashcards" element={<ViewFlashcards />} />
           <Route path="/sets/:setId/cards" element={<ViewSet />} />
           <Route path="/create" element={<CreatePage />} /> 
+          <Route path="/browse" element={<BrowsePage />} />
         </Routes>
       </div>
     </Router>
