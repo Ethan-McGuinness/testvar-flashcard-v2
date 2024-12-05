@@ -64,6 +64,12 @@ const CreatePage = () => {
           <li><Link to="/">log Out</Link></li>
         </ul>
       </nav>
+
+      <header>
+          <h1>Create</h1>
+          <p>Select bellow what you wish to make.</p>
+      </header>
+
       <div className="toggle-buttons">
         <button onClick={() => setView('collection')}>Create Collection</button>
         <button onClick={() => setView('flashcardSet')}>Create Flashcard Set</button>

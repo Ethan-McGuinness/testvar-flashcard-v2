@@ -188,6 +188,20 @@ server.get('/users/:userId/flashcardSets', async (req, res, next) => {
 });
 
 
+//get all public flashcard sets
+server.get('/public-sets', async (req, res, next) => {
+  try {
+    const flashcardSets = await prisma.flashcardSet.findMany({
+      where: { isPublic: true },
+    });
+    res.send(flashcardSets);
+  } catch (error) {
+    res.send(500, { message: 'Error fetching public flashcard sets', error });
+  }
+  return next();
+});
+
+
 
 
 
@@ -464,6 +478,18 @@ server.get('/collections/random', async (req, res, next) => {
   return next();
 });
 
+//get all public collections
+server.get('/public-collections', async (req, res, next) => {
+  try {
+    const collections = await prisma.collection.findMany({
+      where: { isPublic: true },
+    });
+    res.send(collections);
+  } catch (error) {
+    res.send(500, { message: 'Error fetching public collections', error });
+  }
+  return next();
+});
 
 
 
@@ -577,3 +603,17 @@ server.patch('/cards/:cardId/hidden', async (req,res,next)=> {
   }
   return next();
 })
+
+//get all public flashcards
+server.get('/public-flashcards', async (req, res, next) => {
+  try {
+    const flashcards = await prisma.flashcard.findMany({
+      where: { isPublic: true },
+    });
+    res.send(flashcards);
+  } catch (error) {
+    res.send(500, { message: 'Error fetching public flashcards', error });
+  }
+  return next();
+});
+

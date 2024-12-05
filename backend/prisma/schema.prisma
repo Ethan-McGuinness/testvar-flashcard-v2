@@ -27,6 +27,7 @@ model FlashcardSet {
   userId    Int
   user      User          @relation(fields: [userId], references: [id])
   flashcards Flashcard[]
+  isPublic Boolean        @default(true)
   createdAt DateTime      @default(now())
   updatedAt DateTime      @default(now()) @updatedAt
   Collection Collection[]
@@ -41,6 +42,7 @@ model Flashcard {
   hiddenState  Boolean       @default(false)
   flashcardSet FlashcardSet  @relation(fields: [flashcardSetId], references: [id])
   flashcardSetId Int
+  isPublic Boolean        @default(true)
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @default(now()) @updatedAt
 }
@@ -51,6 +53,7 @@ model Collection {
   userId       Int        
   user         User          @relation(fields: [userId], references: [id]) 
   flashcardSets FlashcardSet[]
+  isPublic Boolean        @default(true)
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @default(now()) @updatedAt
 }
