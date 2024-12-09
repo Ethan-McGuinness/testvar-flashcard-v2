@@ -8,12 +8,14 @@ export const authenticate = (req: Request, res: Response, next: Next) => {
     const authHeader = req.headers.authorization;
 
     if (!authHeader) {
+      res.header('Access-Control-Allow-Origin', '*');
       res.send(401, { message: 'Authorization header is missing' });
       return next(false);
     }
 
     const token = authHeader.split(' ')[1];
     if (!token) {
+      res.header('Access-Control-Allow-Origin', '*');
       res.send(401, { message: 'Token is missing' });
       return next(false);
     }
@@ -23,6 +25,7 @@ export const authenticate = (req: Request, res: Response, next: Next) => {
     // req.user = decoded as { userId: number; username: string; admin: boolean };
     return next();
   } catch (error) {
+    res.header('Access-Control-Allow-Origin', '*');
     res.send(403, { message: 'Invalid or expired token' });
     return next(false);
   }

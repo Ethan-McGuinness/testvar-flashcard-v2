@@ -41,6 +41,33 @@ const ViewFlashcards: React.FC = () => {
     setExpandedCollection(prev => prev === collectionId ? null : collectionId);
   };
 
+  //toggles the pricacy of collection
+  const togglePrivacy = async (collectionId: number, currentVisibility: boolean) => {
+    try {
+      const response = await fetch(`http://localhost:5000/collections/${collectionId}/visibility`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ isPublic: !currentVisibility }),
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+  
+      setCollections((prevCollections) =>
+        prevCollections.map((collection) =>
+          collection.id === collectionId ? { ...collection, isPublic: !currentVisibility } : collection
+        )
+      );
+    } catch (error) {
+      console.error('Error updating collection visibility:', error);
+    }
+  };
+  
+  
+
   return (
     <div className="view-flashcards">
       {/* Navbar */}
@@ -66,6 +93,18 @@ const ViewFlashcards: React.FC = () => {
               <h2 onClick={() => toggleCollection(collection.id)} style={{ cursor: 'pointer' }}>
                 {collection.title}
               </h2>
+              <button
+                onClick={() => togglePrivacy(collection.id, collection.isPublic)}
+                style={{
+                  backgroundColor: collection.isPublic ? 'green' : 'red',
+                  color: 'white',
+                  border: 'none',
+                  padding: '10px',
+                  cursor: 'pointer',
+                }}
+              >
+                {collection.isPublic ? 'Public' : 'Private'}
+              </button>
 
               {/* Show flashcards only when the collection is expanded */}
               {expandedCollection === collection.id && (

@@ -1,149 +1,197 @@
 /* General layout */
 .browse-page {
-    display: flex;
-    height: 100vh;
-  }
-  
-  /* Sidebar styling */
-  .sidebar {
-    width: 200px;
-    background: #343a40;
-    color: #ffffff;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .sidebar button {
-    display: block;
-    width: 100%;
-    margin: 10px 0;
-    padding: 10px;
-    background: #495057;
-    border: none;
-    color: #ffffff;
-    cursor: pointer;
-    text-align: left;
-    border-radius: 5px;
-    transition: background 0.3s;
-  }
-  
-  .sidebar button:hover,
-  .sidebar button.active {
-    background: #007bff;
-  }
-  
-  /* Content area styling */
-  .content {
-    flex: 1;
-    padding: 20px;
-    background: #f8f9fa;
-    overflow-y: auto;
-  }
-  
-  .content h2 {
-    color: #007bff;
-    margin-bottom: 20px;
-  }
-  
-  .content ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .content li {
-    background: #ffffff;
-    margin: 10px 0;
-    padding: 15px;
-    border: 1px solid #dee2e6;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .content li p {
-    margin: 5px 0;
-  }
-  
-  .content button {
-    margin-top: 10px;
-    padding: 10px 15px;
-    border: none;
-    background: #007bff;
-    color: white;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background 0.3s;
-  }
-  
-  .content button:hover {
-    background: #0056b3;
-  }
-  
-  /* Overlay styling */
-  .overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    color: #ffffff;
-    padding: 40px;
-    overflow-y: auto;
-    z-index: 1000;
-  }
-  
-  .overlay .close {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    cursor: pointer;
-    background: #ffffff;
-    color: #000000;
-    padding: 10px;
-    border-radius: 5px;
-    border: none;
-    transition: background 0.3s;
-  }
-  
-  .overlay .close:hover {
-    background: #ccc;
-  }
-  
-  .overlay h3 {
-    margin-top: 0;
-  }
-  
-  .overlay ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .overlay li {
-    background: #495057;
-    margin: 10px 0;
-    padding: 15px;
-    border: 1px solid #6c757d;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .overlay li p {
-    margin: 5px 0;
-  }
-  
-  .overlay button {
-    margin-top: 10px;
-    padding: 10px 15px;
-    border: none;
-    background: #007bff;
-    color: white;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background 0.3s;
-  }
-  
-  .overlay button:hover {
-    background: #0056b3;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* Navigation and Footer styling */
+.browse-page nav,
+.browse-page footer {
+  background-color: #343a40; /* Dark background color */
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+}
+
+.browse-page nav {
+  top: 0;
+}
+
+.browse-page footer {
+  bottom: 0;
+  border-top: 1px solid #dee2e6;
+}
+
+.browse-page nav ul,
+.browse-page footer ul {
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+  margin: 0;
+  padding: 0;
+}
+
+.browse-page nav ul li,
+.browse-page footer ul li {
+  display: inline;
+}
+
+.browse-page nav ul li a,
+.browse-page footer ul li a {
+  text-decoration: none;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+/* Sidebar styling */
+.sidebar {
+  width: 200px;
+  background: #343a40;
+  color: #ffffff;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 60px; /* Ensure it starts below the nav bar */
+  bottom: 0; /* Ensure it extends to the bottom */
+  left: 0; /* Fixed to the left side */
+  height: calc(100% - 60px); /* Full height, accounting for the navbar */
+}
+
+.sidebar button {
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  background: #495057;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  text-align: left;
+  border-radius: 5px;
+  transition: background 0.3s;
+}
+
+.sidebar button:hover,
+.sidebar button.active {
+  background: #007bff;
+}
+
+/* Content area styling */
+.content {
+  flex: 1;
+  margin-left: 220px; /* Make room for the sidebar */
+  padding: 80px 20px 60px 20px; /* Add padding for nav and footer */
+  background: #f8f9fa;
+  overflow-y: auto;
+}
+
+.content h2 {
+  color: #000000;
+  margin-bottom: 20px;
+}
+
+.content ul {
+  display: flex;
+  flex-wrap: wrap; /* Allow items to wrap to the next line */
+  justify-content: center; /* Center the items */
+  padding: 0;
+  list-style-type: none;
+}
+
+.content li {
+  background: #ffffff;
+  margin: 10px;
+  padding: 15px;
+  border: 1px solid #dee2e6;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  flex: 0 0 calc(50% - 40px); /* Two items per row with spacing */
+}
+
+.content li p {
+  margin: 5px 0;
+}
+
+.content button {
+  margin-top: 10px;
+  padding: 10px 15px;
+  border: none;
+  background: #007bff;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background 0.3s;
+}
+
+.content button:hover {
+  background: #0056b3;
+}
+
+/* Overlay styling */
+.overlay {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border: 5px #000000;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1001; /* Ensure it's above the nav bar */
+}
+
+.overlay .close {
+  bottom: 0;
+  cursor: pointer;
+  background: #ff0000; /* Red background */
+  color: #ffffff;
+  border: none;
+  transition: background 0.3s;
+}
+
+.overlay .close:hover {
+  background: #cc0000; /* Darker red on hover */
+}
+
+
+.overlay h3 {
+  margin-top: 0;
+}
+
+.overlay ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.overlay li {
+  background: #ffffff; /* Lighter background for better visibility */
+  margin: 10px 0;
+  padding: 15px;
+  border: 1px solid #dee2e6;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.overlay li p {
+  margin: 5px 0;
+}
+
+.overlay button {
+  margin-top: 10px;
+  padding: 10px 15px;
+  border: none;
+  background: #007bff;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background 0.3s;
+}
+
+.overlay button:hover {
+  background: #0056b3;
+}
