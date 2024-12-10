@@ -1,23 +1,29 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
 import ViewFlashcards from './pages/ViewFlashcards';
 import ViewSet from './pages/ViewSet';
-import CreatePage from './pages/CreatePage'; // Import CreatePage component
+import CreatePage from './pages/CreatePage';
 import BrowsePage from './pages/BrowsePage';
+import AdminDashboard from './pages/AdminDashboard'; // Import AdminDashboard component
+import AdminCollections from './pages/AdminCollections';
 
 function App() {
+  const isAdmin = localStorage.getItem('isAdmin') === 'true'; // Check if the user is an admin
+
   return (
-    <Router> 
+    <Router>
       <div className="App">
         <Routes>
-          <Route path="/" element={<LoginPage />} /> 
-          <Route path="/home" element={<HomePage />} /> 
+          <Route path="/" element={<LoginPage />} />
+          <Route path="/home" element={isAdmin ? <Navigate to="/admin-dashboard" /> : <HomePage />} />
           <Route path="/flashcards" element={<ViewFlashcards />} />
           <Route path="/sets/:setId/cards" element={<ViewSet />} />
-          <Route path="/create" element={<CreatePage />} /> 
+          <Route path="/create" element={<CreatePage />} />
           <Route path="/browse" element={<BrowsePage />} />
+          <Route path="/admin-dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/collections" element={<AdminCollections />} />
         </Routes>
       </div>
     </Router>

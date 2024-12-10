@@ -1,7 +1,5 @@
 import { Request, Response, Next } from 'restify';
-import jwt from 'jsonwebtoken';
-
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
+import { decodeToken } from '../utils/JWTUtils';
 
 export const authenticate = (req: Request, res: Response, next: Next) => {
   try {
@@ -20,9 +18,14 @@ export const authenticate = (req: Request, res: Response, next: Next) => {
       return next(false);
     }
 
-    const decoded = jwt.verify(token, JWT_SECRET);
+    const decoded = decodeToken(token);
+    if (!decoded) {
+      res.header('Access-Control-Allow-Origin', '*');
+      res.send(403, { message: 'Invalid or expired token' });
+      return next(false);
+    }
 
-    // req.user = decoded as { userId: number; username: string; admin: boolean };
+    // Proceed with the request
     return next();
   } catch (error) {
     res.header('Access-Control-Allow-Origin', '*');

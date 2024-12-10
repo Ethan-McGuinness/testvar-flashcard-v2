@@ -9,6 +9,7 @@ import { registerSetRoutes } from './routes/setRoutes';
 import { registerCollectionRoutes } from './routes/collectionRoutes';
 import { registerFlashcardRoutes } from './routes/flashcardRoutes';
 
+
 const server = restify.createServer({
   name: 'API',
   version: '1.0.0',
@@ -33,13 +34,15 @@ registerAuthRoutes(server);
 // Register user routes 
 registerUserRoutes(server);
 
-//Register Set Routes
+// Register Set Routes
 registerSetRoutes(server);
 
-//Register Collection routes
+// Register Collection routes
 registerCollectionRoutes(server);
 
+// Register Flashcard routes
 registerFlashcardRoutes(server);
+
 
 
 server.get('/', (req, res, next) => {
@@ -51,6 +54,3 @@ server.get('/', (req, res, next) => {
 server.listen(5000, () => {
   console.log('Server is running at http://localhost:5000');
 });
-
-
-

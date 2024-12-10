@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import axiosInstance from '../utilities/axiosInstance';
 import './LoginPage.css';
 
-
 interface LoginFormState {
   username: string;
   password: string;
@@ -21,7 +20,6 @@ const LoginPage: React.FC = () => {
 
     const { username, password } = formState;
 
-    // Basic validation for empty fields
     if (!username || !password) {
       setFormState({
         ...formState,
@@ -31,16 +29,24 @@ const LoginPage: React.FC = () => {
     }
 
     try {
-      const response = await axiosInstance.post('/auth/login', {
-        username,
-        password,
-      });
+      const response = await axiosInstance.post('/auth/login', { username, password });
+      const token = response.data.token;
+      localStorage.setItem('token', token);
 
-      // Save the token and redirect
-      localStorage.setItem('token', response.data.token);
-      window.location.href = '/home'; // Redirect to the home page
+      // Call backend to decode the JWT token and get user info
+      const decodeResponse = await axiosInstance.post('/auth/decode-token', { token });
+      const decodedToken = decodeResponse.data;
+
+      if (decodedToken) {
+        if (decodedToken.admin) {
+          localStorage.setItem('isAdmin', 'true');
+          window.location.href = '/admin-dashboard'; // Redirect to admin dashboard if user is an admin
+        } else {
+          localStorage.setItem('isAdmin', 'false');
+          window.location.href = '/home'; // Redirect to home page if user is not an admin
+        }
+      }
     } catch (error) {
-      console.log("Error caught: ", error);
       setFormState({
         ...formState,
         error: 'Invalid credentials. Please try again.',
