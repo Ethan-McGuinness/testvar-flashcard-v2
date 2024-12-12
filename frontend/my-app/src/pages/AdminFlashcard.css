@@ -1,0 +1,82 @@
+.admin-flashcards {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .admin-flashcards h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .admin-flashcards button {
+    display: inline-block;
+    margin: 10px 0;
+    padding: 10px 20px;
+    font-size: 14px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .admin-flashcards button:hover {
+    background-color: #0056b3;
+  }
+  
+  .admin-flashcards table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .admin-flashcards th, .admin-flashcards td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  .admin-flashcards th {
+    background-color: #f4f4f4;
+  }
+  
+  .admin-flashcards tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .admin-flashcards tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .admin-flashcards input[type="text"] {
+    padding: 10px;
+    width: calc(100% - 20px);
+    margin: 10px 0;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  
+  .fixed-inputs {
+    position: sticky;
+    top: 60px; /* Adjust based on the height of the navbar */
+    background-color: white;
+    padding: 10px;
+    z-index: 10;
+  }
+  
+  .fixed-inputs input,
+  .fixed-inputs select,
+  .fixed-inputs button {
+    display: inline-block;
+    margin-right: 10px;
+  }
+  
+  .scrollable-content {
+    margin-top: 20px;
+    max-height: calc(100vh - 160px); /* Adjust based on the height of the fixed elements */
+    overflow-y: auto;
+  }
+  

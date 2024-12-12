@@ -26,6 +26,33 @@ export const registerFlashcardRoutes = (server: Server) => {
     return next();
   });
 
+   // Get all flashcards
+server.get('/flashcards', async (req, res, next) => {
+  try {
+    const flashcards = await prisma.flashcard.findMany();
+    res.send(flashcards);
+  } catch (error) {
+    res.send(500, { message: 'Error retrieving flashcards', error });
+  }
+  return next();
+});
+
+  // Get all public flashcards
+  server.get('/public-flashcards', async (req, res, next) => {
+    try {
+      const flashcards = await prisma.flashcard.findMany({
+        where: { isPublic: true },
+      });
+      res.send(flashcards);
+    } catch (error) {
+      res.send(500, { message: 'Error fetching public flashcards', error });
+    }
+    return next();
+  });
+
+
+
+
   // Get a flashcard by ID
   server.get('/cards/:cardId', async (req, res, next) => {
     const { cardId } = req.params;
@@ -51,7 +78,7 @@ export const registerFlashcardRoutes = (server: Server) => {
   });
 
   // Update a flashcard by ID
-  server.put('/cards/:cardId', async (req, res, next) => {
+  server.put('/cards/edit/:cardId', async (req, res, next) => {
     const { cardId } = req.params;
     const { question, answer, difficulty } = req.body;
 
@@ -75,7 +102,7 @@ export const registerFlashcardRoutes = (server: Server) => {
   });
 
   // Delete a flashcard by ID
-  server.del('/cards/:cardId', async (req, res, next) => {
+  server.del('/cards/delete/:cardId', async (req, res, next) => {
     const { cardId } = req.params;
 
     try {
@@ -113,19 +140,7 @@ export const registerFlashcardRoutes = (server: Server) => {
     return next();
   });
 
-  // Get all public flashcards
-  server.get('/public-flashcards', async (req, res, next) => {
-    try {
-      const flashcards = await prisma.flashcard.findMany({
-        where: { isPublic: true },
-      });
-      res.send(flashcards);
-    } catch (error) {
-      res.send(500, { message: 'Error fetching public flashcards', error });
-    }
-    return next();
-  });
-
+  
   // Make flashcard private or public
   server.put('/flashcards/:flashcardId/visibility', async (req, res, next) => {
     try {

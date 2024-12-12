@@ -1,0 +1,83 @@
+.admin-sets {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .admin-sets h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .admin-sets button {
+    display: inline-block;
+    margin: 10px 0;
+    padding: 10px 20px;
+    font-size: 14px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .admin-sets button:hover {
+    background-color: #0056b3;
+  }
+  
+  .admin-sets table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .admin-sets th, .admin-sets td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  .admin-sets th {
+    background-color: #f4f4f4;
+  }
+  
+  .admin-sets tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .admin-sets tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .admin-sets input[type="text"] {
+    padding: 10px;
+    width: calc(100% - 20px);
+    margin: 10px 0;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  
+  
+  .fixed-inputs {
+    position: sticky;
+    top: 60px; 
+    background-color: white;
+    padding: 10px;
+    z-index: 10;
+  }
+  
+  .fixed-inputs input,
+  .fixed-inputs select,
+  .fixed-inputs button {
+    display: inline-block;
+    margin-right: 10px;
+  }
+  
+  .scrollable-content {
+    margin-top: 20px;
+    max-height: calc(100vh - 160px); 
+    overflow-y: auto;
+  }
+  
