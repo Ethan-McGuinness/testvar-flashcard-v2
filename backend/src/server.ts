@@ -19,7 +19,7 @@ const prisma = new PrismaClient();
 const cors: corsMiddleware.CorsMiddleware = corsMiddleware({
   origins: ['*'],
   allowHeaders: ['Authorization', 'Content-Type'],
-  // exposeHeaders: ['Authorization'],
+  
 });
 
 server.pre(cors.preflight);

@@ -10,6 +10,7 @@ import AdminDashboard from './pages/AdminDashboard'; // Import AdminDashboard co
 import AdminCollections from './pages/AdminCollections';
 import AdminSets from './pages/AdminSets';
 import AdminFlashcards from './pages/AdminFlashcards';
+import AdminUsers from './pages/AdminUsers';
 
 function App() {
   const isAdmin = localStorage.getItem('isAdmin') === 'true'; // Check if the user is an admin
@@ -28,6 +29,7 @@ function App() {
           <Route path="/admin/collections" element={<AdminCollections />} />
           <Route path="/admin/sets" element={<AdminSets />} />
           <Route path="/admin/flashcards" element={<AdminFlashcards />} />
+          <Route path="/admin/users" element={<AdminUsers />} />
         </Routes>
       </div>
     </Router>

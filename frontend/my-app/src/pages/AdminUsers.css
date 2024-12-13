@@ -1,0 +1,63 @@
+.admin-users {
+    padding: 20px;
+  }
+  
+  .fixed-inputs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .fixed-inputs input {
+    padding: 8px;
+    font-size: 14px;
+  }
+  
+  .fixed-inputs button {
+    padding: 8px 16px;
+    font-size: 14px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .fixed-inputs button:hover {
+    background-color: #0056b3;
+  }
+  
+  .scrollable-content {
+    max-height: 400px; 
+    overflow-y: auto;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+  }
+  
+  th {
+    background-color: #f4f4f4;
+    text-align: left;
+  }
+  
+  td {
+    background-color: #ffffff;
+  }
+  
+  button {
+    padding: 5px 10px;
+    font-size: 14px;
+    margin-right: 5px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #ddd;
+  }
+  
