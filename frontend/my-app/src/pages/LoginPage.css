@@ -8,7 +8,7 @@
   
   /* Body Styles */
   body {
-    background-color: lightskyblue; /* Light blue background */
+    background-color: lightskyblue; 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -41,7 +41,7 @@
   
   /* Styling for the login box */
   .login-box {
-    background-color: #ffffff; /* White background for the login box */
+    background-color: #ffffff; 
     padding: 40px;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -52,7 +52,7 @@
   /* Styling for the app name */
   .login-box h1 {
     font-size: 24px;
-    color: #2a6f97; /* Light blue for the app name */
+    color: #2a6f97; 
     margin-bottom: 30px;
   }
   
@@ -81,7 +81,7 @@
   button {
     width: 100%;
     padding: 12px;
-    background-color: #2a6f97; /* Light blue button */
+    background-color: #2a6f97; 
     border: none;
     border-radius: 4px;
     color: white;
@@ -91,7 +91,7 @@
   }
   
   button:hover {
-    background-color: #235d75; /* Darker blue when hovered */
+    background-color: #235d75; 
   }
   
   /* Error message styling */

@@ -8,6 +8,7 @@ import { registerUserRoutes } from './routes/userRoutes';
 import { registerSetRoutes } from './routes/setRoutes';
 import { registerCollectionRoutes } from './routes/collectionRoutes';
 import { registerFlashcardRoutes } from './routes/flashcardRoutes';
+import { registerCommentRoutes } from './routes/commentRoutes';
 
 
 const server = restify.createServer({
@@ -42,6 +43,9 @@ registerCollectionRoutes(server);
 
 // Register Flashcard routes
 registerFlashcardRoutes(server);
+
+//Register the comment routes
+registerCommentRoutes(server);
 
 
 

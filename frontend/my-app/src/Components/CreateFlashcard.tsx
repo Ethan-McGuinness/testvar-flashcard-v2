@@ -10,6 +10,7 @@ interface CreateFlashcardProps {
   flashcardSets: FlashcardSet[];
 }
 
+//component to take user inputs and create a new flashcard
 const CreateFlashcard: React.FC<CreateFlashcardProps> = ({ flashcardSets }) => {
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');

@@ -60,7 +60,7 @@ nav {
     font-size: 1.8rem;
     margin-bottom: 10px;
     cursor: pointer;
-    user-select: none; /* Prevent text selection on click */
+    user-select: none; 
   }
   
   .collection ul {

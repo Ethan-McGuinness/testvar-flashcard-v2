@@ -137,6 +137,7 @@ const ViewSet = () => {
       <nav>
         <ul>
           <li><Link to="/home">Home</Link></li>
+          <li><Link to="/flashcards">View your Flashcard</Link></li>
           <li><Link to="/create">Create Flashcards</Link></li>
           <li><Link to="/">Log Out</Link></li>
         </ul>

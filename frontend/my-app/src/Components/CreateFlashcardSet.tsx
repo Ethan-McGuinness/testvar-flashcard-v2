@@ -12,6 +12,7 @@ interface CreateFlashcardSetProps {
   refreshFlashcardSets: () => void;
 }
 
+//component to take user inputs and create a new flashcard set
 const CreateFlashcardSet: React.FC<CreateFlashcardSetProps> = ({ userId, collections, refreshFlashcardSets }) => {
   const [name, setName] = useState('');
   const [collectionId, setCollectionId] = useState<number | null>(null);
@@ -26,9 +27,16 @@ const CreateFlashcardSet: React.FC<CreateFlashcardSetProps> = ({ userId, collect
       setName('');
       setCollectionId(null);
       refreshFlashcardSets(); // Fetch updated flashcard sets
-    } catch (error) {
-      setError('Failed to create flashcard set.');
+    } catch (error: any) {
+      console.error('Error creating flashcard set:', error); 
+      if (error.response && error.response.data && error.response.data.message) {
+        setError(error.response.data.message); 
+      } else {
+        setError('Failed to create flashcard set.'); 
+      }
     }
+    
+    
   };
 
   return (
@@ -48,7 +56,7 @@ const CreateFlashcardSet: React.FC<CreateFlashcardSetProps> = ({ userId, collect
       </div>
       <button type="submit">Create Flashcard Set</button>
       {success && <p>{success}</p>}
-      {error && <p>{error}</p>}
+      {error && <p className="error-message">{error}</p>}
     </form>
   );
 };

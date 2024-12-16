@@ -4,6 +4,7 @@ import Sidebar from '../Components/sideBar'; // Ensure correct import path
 import { copyCollectionToUser, copyFlashcardSetToUser, copyFlashcardToUser } from '../utilities/addToUser';
 import '../pages/BrowsePage.css'; // Ensure correct CSS import path
 import { Link } from 'react-router-dom';
+import CommentsPopup from '../Components/CreateComments';
 
 // Define types for flashcards, sets, and collections
 interface Flashcard {
@@ -39,6 +40,10 @@ const BrowsePage: React.FC = () => {
   const [selectedCollection, setSelectedCollection] = useState<Collection | null>(null);
   const [selectedCollectionSets, setSelectedCollectionSets] = useState<FlashcardSetWithCards[]>([]);
   const [showCopyOverlay, setShowCopyOverlay] = useState(false);
+  const [showCommentsPopup, setShowCommentsPopup] = useState(false);
+  const [selectedCommentSet, setSelectedCommentSet] = useState<FlashcardSet | null>(null);
+  
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -119,8 +124,18 @@ const BrowsePage: React.FC = () => {
     setShowCopyOverlay(true);
   };
 
+  const handleCommentButtonClick = (set: FlashcardSet) => {
+    setSelectedCommentSet(set);
+    setSelectedSet(set);
+  }
+
   const closeOverlay = () => {
     setShowCopyOverlay(false);
+  };
+
+  const closeCommentsPopup = () => {
+    setShowCommentsPopup(false);
+    setSelectedCommentSet(null);
   };
 
   
@@ -147,12 +162,13 @@ const BrowsePage: React.FC = () => {
       <ul>
         {sets.map((set) => (
           <li key={set.id} onClick={() => {
-            console.log("Selected Set:", JSON.stringify(set, null, 2)); // Debug the selected set
+            console.log("Selected Set:", JSON.stringify(set, null, 2)); 
             setSelectedSet(set);
             fetchFlashcardsInSet(set.id).then(setSelectedSetFlashcards); // Fetch flashcards for the selected set
           }}>
             {set.name}
             <button onClick={() => handleCopySet(set.id, 1, 1)}>Copy to My Collection</button>
+            <button onClick={(e) => { e.stopPropagation(); handleCommentButtonClick(set); }}>Comments</button>
           </li>
         ))}
       </ul>
@@ -267,6 +283,12 @@ const BrowsePage: React.FC = () => {
           <button onClick={closeOverlay}>Close</button>
           </div>
       )}
+
+{showCommentsPopup && selectedCommentSet && (
+  <CommentsPopup setId={selectedCommentSet.id} onClose={closeCommentsPopup} />
+)}
+
+
     </div>
   );
   

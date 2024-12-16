@@ -20,6 +20,21 @@ export const registerSetRoutes = (server: Server) => {
     try {
       const { name, userId, flashcards, collections } = req.body;
 
+      const today = new Date();
+      today.setHours(0,0,0,0);
+
+      const setsCreatedToday = await prisma.flashcardSet.count({
+        where: {
+          createdAt: {
+            gte: today,
+          },
+        },
+      });
+
+      if (setsCreatedToday >= 20) {
+        return res.send(400, {message: 'Limit of 20 sets per day has been reached'});
+      }
+
       if (!name || !userId || !flashcards || !collections) {
         res.send(400, { message: 'Name, User ID, flashcards, and collections are required' });
         return next();
@@ -55,15 +70,15 @@ export const registerSetRoutes = (server: Server) => {
       const flashcardSet = await prisma.flashcardSet.findUnique({
         where: { id: Number(setId) },
         include: {
-          flashcards: true,  // Include flashcards
-          Collection: true   // Include associated collections
+          flashcards: true,  
+          Collection: true   
         },
       });
 
       if (!flashcardSet) {
         res.send(404, { message: 'Flashcard set not found' });
       } else {
-        res.send(flashcardSet);  // Return the found flashcard set, with flashcards and collections
+        res.send(flashcardSet);  
       }
     } catch (error) {
       res.send(500, { message: 'Error retrieving flashcard set', error });
@@ -187,4 +202,30 @@ export const registerSetRoutes = (server: Server) => {
     }
     return next();
   });
+
+  //Delete set and all contents within
+  server.del('/sets/delete/:setId', async (req, res, next) => {
+    try {
+      const {setId} = req.params;
+
+      await prisma.flashcard.deleteMany({
+        where: {flashcardSetId: Number(setId)},
+      });
+      
+      await prisma.flashcardSet.delete({
+        where: {id: Number(setId)},
+      });
+
+
+      res.send(200, {message:'flashcard set and all its content have been deleted'})
+    } catch (error) {
+      console.error('Error deleting the set with the id: ${setId}:', error);
+      res.send(500, {message: 'error deleting flashcard set', error});
+    }
+    return next();
+  })
+
+
+
+
 };

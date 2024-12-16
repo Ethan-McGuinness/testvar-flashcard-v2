@@ -5,6 +5,7 @@ interface SidebarProps {
   onTabChange: (tab: string) => void;
 }
 
+//component for sidebar used within the viewing user contant page
 const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
   return (
     <div className="sidebar">

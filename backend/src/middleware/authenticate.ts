@@ -1,6 +1,7 @@
 import { Request, Response, Next } from 'restify';
 import { decodeToken } from '../utils/JWTUtils';
 
+//validating is the user holds a jwt token that is valid
 export const authenticate = (req: Request, res: Response, next: Next) => {
   try {
     const authHeader = req.headers.authorization;

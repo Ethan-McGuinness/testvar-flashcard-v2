@@ -10,14 +10,14 @@
   /* Buttons Container */
   .toggle-buttons {
     display: flex;
-    justify-content: space-between; /* Space evenly */
+    justify-content: space-between; 
     margin-bottom: 20px;
     text-emphasis-color: white;
   }
   
   /* Individual Buttons */
   .toggle-buttons button {
-    flex: 1; /* Make buttons take equal space */
+    flex: 1; 
     margin-right: 10px;
     padding: 10px 20px;
     border: none;
@@ -31,7 +31,7 @@
     background-color: gray;
   }
   
-  /* Remove right margin for the last button */
+  
   .toggle-buttons button:last-child {
     margin-right: 0;
   }

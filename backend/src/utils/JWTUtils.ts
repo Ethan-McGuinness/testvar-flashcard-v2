@@ -8,6 +8,7 @@ interface DecodedToken {
   admin: boolean;
 }
 
+//decodes JWT token
 export const decodeToken = (token: string): DecodedToken | null => {
   try {
     const decoded = jwt.verify(token, JWT_SECRET) as DecodedToken;

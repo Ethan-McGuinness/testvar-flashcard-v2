@@ -6,6 +6,7 @@ import jwt from 'jsonwebtoken';
 const prisma = new PrismaClient();
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
+//validates the username, password and jwt token
 export const loginUser = async (req: Request, res: Response, next: Next) => {
     try{
         const {username, password} = req.body;

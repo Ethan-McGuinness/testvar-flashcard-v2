@@ -6,7 +6,7 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = env("DATABASE_URL") // This will read the DB URL from your .env file
+  url      = env("DATABASE_URL") 
 }
 
 model User {

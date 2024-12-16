@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import axios from "axios";
 
+//component to take user inputs and create a new collection
 const CreateCollection = ({ userId, refreshCollections }: { userId: number; refreshCollections: () => void }) => {
     const [title, setTitle] = useState('');
     const [error, setError] = useState('');
