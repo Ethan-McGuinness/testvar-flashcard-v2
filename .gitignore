@@ -1,1 +1,43 @@
 *.rest
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# Production
+build/
+dist/
+
+# TypeScript
+*.tsbuildinfo
+
+# Coverage directory used by tools like istanbul
+coverage/
+
+# Build artifacts
+/dist/
+/out/
+
+# IDEs and editors
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# OS files
+.DS_Store
+Thumbs.db
