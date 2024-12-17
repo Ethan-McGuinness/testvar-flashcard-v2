@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import '../Components/CreateComments.css'
+import { jwtDecode } from 'jwt-decode';
 
 
 interface Comment {
@@ -22,6 +24,20 @@ interface CommentsPopupProps {
 const CommentsPopup: React.FC<CommentsPopupProps> = ({ setId, onClose }) => {
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState('');
+  const [authorId, setAuthorId] = useState<number | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      try {
+        const decodedToken: any = jwtDecode(token);
+        setAuthorId(decodedToken.userId);
+      } catch (error) {
+        console.error("Failed to decode and fetch the users id", error);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -37,14 +53,14 @@ const CommentsPopup: React.FC<CommentsPopupProps> = ({ setId, onClose }) => {
   }, [setId]);
 
   const handleAddComment = async () => {
-    if (!newComment) {
+    if (!newComment || authorId === null) {
       return;
     }
 
     try {
       const response = await axios.post(`/sets/${setId}/comments`, {
         comment: newComment,
-        authorId: 1, // Replace with actual user ID
+        authorId: authorId,
       });
       setComments([...comments, response.data]);
       setNewComment('');
@@ -54,13 +70,22 @@ const CommentsPopup: React.FC<CommentsPopupProps> = ({ setId, onClose }) => {
   };
 
   const handleDeleteComment = async (commentId: number) => {
+    if (!authorId) {
+      console.error("User ID not found");
+      return;
+    }
+  
     try {
-      await axios.delete(`/comments/${commentId}`);
+      await axios.delete(`/comments/${commentId}`, {
+        data: { userId: authorId }, // Send userId in the request body
+      });
       setComments(comments.filter(comment => comment.id !== commentId));
     } catch (error) {
       console.error('Error deleting comment:', error);
+      setErrorMessage('You are not authorized to delete this comment.');
     }
   };
+  
 
   return (
     <div className="comments-popup">
@@ -78,10 +103,11 @@ const CommentsPopup: React.FC<CommentsPopupProps> = ({ setId, onClose }) => {
         <div className="comments-list">
           {comments.map(comment => (
             <div key={comment.id} className="comment">
-              <p><strong>{comment.author.username}</strong>: {comment.comment}</p>
+              <p><strong>{comment.author?.username}</strong>: {comment.comment}</p>
               <button onClick={() => handleDeleteComment(comment.id)}>Delete</button>
             </div>
           ))}
+          {errorMessage && <p className="error-message">{errorMessage}</p>}
         </div>
       </div>
     </div>

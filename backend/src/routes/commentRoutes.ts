@@ -33,6 +33,7 @@ server.post('/sets/:setId/comments', async (req, res, next) => {
                 setId: Number(setId),
                 authorId: Number(authorId),
             },
+            include: {author: true},
         });
         res.send(201, newComment);
     } catch (error) {
@@ -42,18 +43,38 @@ server.post('/sets/:setId/comments', async (req, res, next) => {
 });
 
 //Delete a comment by id
-server.del('/comments/:commentId',async (req, res, next) => {
+server.del('/comments/:commentId', async (req, res, next) => {
     try {
-        const { commentId} = req.params;
-        const deletedComment = await prisma.comment.delete({
-            where: {id: Number(commentId)},
-        });
-        res.send(deletedComment);
+      const { commentId } = req.params;
+      const { userId } = req.body; 
+  
+      
+      const comment = await prisma.comment.findUnique({
+        where: { id: Number(commentId) },
+      });
+  
+      if (!comment) {
+        return res.send(404, { message: 'Comment not found' });
+      }
+  
+      
+      if (comment.authorId !== userId) {
+        return res.send(403, { message: 'You are not authorized to delete this comment' });
+      }
+  
+      
+      const deletedComment = await prisma.comment.delete({
+        where: { id: Number(commentId) },
+      });
+  
+      res.send(deletedComment);
     } catch (error) {
-        res.send(500, {message: 'Error deleting comment', error});
+      console.error('Error deleting comment:', error);
+      res.send(500, { message: 'Error deleting comment', error });
     }
     return next();
-} );
+  });
+  
 
 };
 

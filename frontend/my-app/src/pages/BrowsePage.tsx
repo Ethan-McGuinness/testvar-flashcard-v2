@@ -126,7 +126,7 @@ const BrowsePage: React.FC = () => {
 
   const handleCommentButtonClick = (set: FlashcardSet) => {
     setSelectedCommentSet(set);
-    setSelectedSet(set);
+    setShowCommentsPopup(true);
   }
 
   const closeOverlay = () => {
