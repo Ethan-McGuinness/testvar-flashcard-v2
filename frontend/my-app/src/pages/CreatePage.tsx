@@ -73,7 +73,7 @@ const CreatePage = () => {
       <div className="toggle-buttons">
         <button onClick={() => setView('collection')}>Create Collection</button>
         <button onClick={() => setView('flashcardSet')}>Create Flashcard Set</button>
-        <button onClick={() => setView('flashcard')}>Create Flashcard</button>
+        <button onClick={() => setView('flashcard')}>Create Flashcards</button>
       </div>
 
       <div className="form-container">

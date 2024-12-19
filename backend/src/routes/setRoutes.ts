@@ -1,7 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { Server } from 'restify';
-
-const prisma = new PrismaClient();
+import { prisma } from '../server'
 
 export const registerSetRoutes = (server: Server) => {
   // Get all flashcard sets

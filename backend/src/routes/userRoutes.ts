@@ -1,8 +1,8 @@
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 import { Server } from 'restify';
+import { prisma } from '../server'
 
-const prisma = new PrismaClient();
 
 export const registerUserRoutes = (server: Server) => {
   // Get all users

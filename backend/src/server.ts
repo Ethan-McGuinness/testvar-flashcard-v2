@@ -58,3 +58,5 @@ server.get('/', (req, res, next) => {
 server.listen(5000, () => {
   console.log('Server is running at http://localhost:5000');
 });
+
+export {server, prisma};
