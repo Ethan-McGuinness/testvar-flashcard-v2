@@ -1,15 +1,15 @@
 const request = require('supertest');
-const { server, prisma } = require('../src/server'); // Adjust the path to your server file
-const { v4: uuidv4 } = require('uuid'); // To generate unique usernames
+const { server, prisma } = require('../src/server'); 
+const { v4: uuidv4 } = require('uuid'); 
 
 describe('GET /flashcards', () => {
   let user;
 
   beforeAll(async () => {
-    // Generate a unique username for the user
+    
     const uniqueUsername = `testuser_${uuidv4()}`;
 
-    // Setup your test database with a user, flashcard set, and some flashcards
+   
     user = await prisma.user.create({
       data: {
         username: uniqueUsername,
@@ -29,21 +29,21 @@ describe('GET /flashcards', () => {
         question: 'Sample question',
         answer: 'Sample answer',
         difficulty: 'easy',
-        flashcardSetId: flashcardSet.id // Use the created flashcard set ID
+        flashcardSetId: flashcardSet.id 
       }
     });
   });
 
   afterAll(async () => {
     try {
-      // Cleanup your test database in proper order to avoid foreign key constraints
+      
       await prisma.flashcard.deleteMany({});
       await prisma.flashcardSet.deleteMany({});
       await prisma.user.deleteMany({});
     } catch (error) {
       console.error('Error during cleanup:', error);
     } finally {
-      await prisma.$disconnect(); // Close the Prisma connection
+      await prisma.$disconnect(); 
 
       server.close(() => {
         console.log('Server closed');
@@ -60,7 +60,7 @@ describe('GET /flashcards', () => {
   });
 
   it('should handle errors', async () => {
-    // Mock the Prisma client's findMany method to throw an error
+  
     const mockFindMany = jest.fn(() => {
       throw new Error('Database error');
     });

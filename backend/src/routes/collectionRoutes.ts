@@ -98,7 +98,7 @@ export const registerCollectionRoutes = (server: Server) => {
         where: {
           id: Number(collectionId),
         },
-      });
+    });
 
       res.send({ message: 'Collection deleted', collection: deletedCollection });
     } catch (error) {
@@ -115,7 +115,7 @@ export const registerCollectionRoutes = (server: Server) => {
       const collections = await prisma.collection.findMany({
         where: {
           userId: Number(userId),
-        },
+       },
         include: {
           flashcardSets: true,
         },
@@ -143,7 +143,7 @@ export const registerCollectionRoutes = (server: Server) => {
       res.send(randomCollection);
     } catch (error) {
       res.send(500, { message: 'Error fetching random collection', error });
-    }
+ }
     return next();
   });
 
@@ -191,7 +191,7 @@ export const registerCollectionRoutes = (server: Server) => {
         where: { id: Number(collectionId) },
         data: { isPublic: isPublic },
         include: { flashcardSets: true },
-      });
+    });
 
       for (const set of updatedCollection.flashcardSets) {
         await prisma.flashcardSet.update({

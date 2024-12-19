@@ -20,3 +20,6 @@ const UserManagementPage: React.FC = () => {
 };
 
 export default UserManagementPage;
+
+//IF YOU HAVE TIME REMOVE THE REUSED CREATION CODE FROM THE ADMIN PAGES THAT LETS USERS CREATE STUFF AS THEY CAN DO IT IN TWO AREAS 
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
