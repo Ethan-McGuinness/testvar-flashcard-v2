@@ -1,61 +1,59 @@
 import React, { useState, useEffect } from 'react';
 import axiosInstance from '../utilities/axiosInstance';
+import {jwtDecode} from 'jwt-decode';
 import { Link } from 'react-router-dom';
-import './AdminCollections.css';
+import './AdminCollections.css'; 
 
 interface Collection {
   id: number;
   title: string;
 }
 
-interface User {
-  id: number;
-  username: string;
-}
-
-const AdminCollections: React.FC = () => {
+const UserCollections: React.FC = () => {
+  const [userId, setUserId] = useState<number | null>(null);
   const [collections, setCollections] = useState<Collection[]>([]);
-  const [users, setUsers] = useState<User[]>([]);
-  const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
   const [newTitle, setNewTitle] = useState('');
   const [editingCollection, setEditingCollection] = useState<Collection | null>(null);
 
   useEffect(() => {
-    const fetchCollections = async () => {
-      try {
-        const response = await axiosInstance.get('/collections');
-        setCollections(response.data);
-      } catch (error) {
-        console.error('Error fetching collections:', error);
-      }
-    };
+    const token = localStorage.getItem('token');
 
-    const fetchUsers = async () => {
+    if (token) {
       try {
-        const response = await axiosInstance.get('/users');
-        setUsers(response.data);
+        const decodedToken: any = jwtDecode(token); 
+        setUserId(decodedToken.userId); 
       } catch (error) {
-        console.error('Error fetching users:', error);
+        console.error("Failed to decode the token", error);
+      }
+    }
+
+    const fetchCollections = async () => {
+      if (userId) {
+        try {
+          const response = await axiosInstance.get(`/users/${userId}/collections`);
+          setCollections(response.data);
+        } catch (error) {
+          console.error('Error fetching collections:', error);
+        }
       }
     };
 
     fetchCollections();
-    fetchUsers();
-  }, []);
+  }, [userId]);
 
   const handleAdd = async () => {
-    if (selectedUserId === null) {
-      alert('Please select a user.');
-      return;
-    }
+    const token = localStorage.getItem('token');
+    if (token) {
+      const decodedToken: any = jwtDecode(token);
+      const userId = decodedToken.userId;
 
-    try {
-      const response = await axiosInstance.post('/collections', { title: newTitle, userId: selectedUserId });
-      setCollections([...collections, response.data]);
-      setNewTitle('');
-      setSelectedUserId(null);
-    } catch (error) {
-      console.error('Error adding collection:', error);
+      try {
+        const response = await axiosInstance.post('/collections', { title: newTitle, userId });
+        setCollections([...collections, response.data]);
+        setNewTitle('');
+      } catch (error) {
+        console.error('Error adding collection:', error);
+      }
     }
   };
 
@@ -92,15 +90,15 @@ const AdminCollections: React.FC = () => {
     <div>
       <nav className="navbar">
         <ul>
-          <li><Link to="/admin/collections">Manage Collections</Link></li>
-          <li><Link to="/admin/sets">Manage Sets</Link></li>
-          <li><Link to="/admin/flashcards">Manage Flashcards</Link></li>
-          <li><Link to="/admin/users">Manage Users</Link></li>
-          <li><Link to="/">log Out</Link></li>
+          <li><Link to="/home">Home</Link></li>
+          <li><Link to="/user/collections">Manage My Collections</Link></li>
+          <li><Link to="/user/sets">Manage My Sets</Link></li>
+          <li><Link to="/user/flashcards">Manage My Flashcards</Link></li>
+          <li><Link to="/">Log Out</Link></li>
         </ul>
       </nav>
-      <div className="admin-collections">
-        <h2>Admin Collections</h2>
+      <div className="user-collections">
+        <h2>My Collections</h2>
         <div className="fixed-inputs">
           <input
             type="text"
@@ -108,12 +106,6 @@ const AdminCollections: React.FC = () => {
             value={newTitle}
             onChange={e => setNewTitle(e.target.value)}
           />
-          <select value={selectedUserId ?? ''} onChange={e => setSelectedUserId(Number(e.target.value))}>
-            <option value="" disabled>Select a user</option>
-            {users.map(user => (
-              <option key={user.id} value={user.id}>{`ID: ${user.id}, USERNAME: ${user.username}`}</option>
-            ))}
-          </select>
           <button onClick={editingCollection ? handleSave : handleAdd}>
             {editingCollection ? 'Save' : 'Add New Collection'}
           </button>
@@ -162,4 +154,4 @@ const AdminCollections: React.FC = () => {
   );
 };
 
-export default AdminCollections;
+export default UserCollections;

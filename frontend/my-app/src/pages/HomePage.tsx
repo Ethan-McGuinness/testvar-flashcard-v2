@@ -11,6 +11,7 @@ const HomePage: React.FC = () => {
           <li><Link to="/flashcards">View your Flashcard</Link></li>
           <li><Link to="/create">Create Flashcards</Link></li>
           <li><Link to="/browse">Browse Flashcards</Link></li>
+          <li><Link to="/UserManagement">edit and delete</Link></li>
           <li><Link to="/">log Out</Link></li>
         </ul>
       </nav>

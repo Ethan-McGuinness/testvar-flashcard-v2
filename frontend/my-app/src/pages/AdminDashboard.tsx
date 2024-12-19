@@ -12,6 +12,7 @@ const AdminDashboard: React.FC = () => {
           <li><Link to="/admin/sets">Manage Sets</Link></li>
           <li><Link to="/admin/flashcards">Manage Flashcards</Link></li>
           <li><Link to="/admin/users">Manage Users</Link></li>
+          <li><Link to="/">log Out</Link></li>
         </ul>
       </nav>
     </div>
