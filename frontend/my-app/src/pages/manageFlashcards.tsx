@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axiosInstance from '../utilities/axiosInstance';
 import { jwtDecode } from 'jwt-decode';
 import { Link } from 'react-router-dom';
-import './AdminFlashcard.css'; // You can rename this to UserFlashcards.css if you like
+import './AdminFlashcard.css'; 
 
-// Interface for flashcard data
+
 interface Flashcard {
   id: number;
   question: string;
@@ -13,7 +13,7 @@ interface Flashcard {
   flashcardSetId: number;
 }
 
-// Interface for flashcard set data
+
 interface FlashcardSet {
   id: number;
   name: string;
@@ -34,8 +34,8 @@ const UserFlashcards: React.FC = () => {
 
     if (token) {
       try {
-        const decodedToken: any = jwtDecode(token); // Decoding the token
-        setUserId(decodedToken.userId); // Store the userId from the token
+        const decodedToken: any = jwtDecode(token); 
+        setUserId(decodedToken.userId); 
       } catch (error) {
         console.error("Failed to decode the token", error);
       }

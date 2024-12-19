@@ -5,52 +5,75 @@ import './LoginPage.css';
 interface LoginFormState {
   username: string;
   password: string;
+  confirmPassword?: string;  // Added for registration
   error: string;
 }
 
 const LoginPage: React.FC = () => {
+  const [isRegistering, setIsRegistering] = useState(false);  // Toggle state
   const [formState, setFormState] = useState<LoginFormState>({
     username: '',
     password: '',
+    confirmPassword: '',
     error: '',
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const { username, password } = formState;
+    const { username, password, confirmPassword } = formState;
 
-    if (!username || !password) {
+    if (!username || !password || (isRegistering && !confirmPassword)) {
       setFormState({
         ...formState,
-        error: 'Please fill out both fields.',
+        error: 'Please fill out all fields.',
       });
       return;
     }
 
-    try {
-      const response = await axiosInstance.post('/auth/login', { username, password });
-      const token = response.data.token;
-      localStorage.setItem('token', token);
-
-      // Call backend to decode the JWT token and get user info
-      const decodeResponse = await axiosInstance.post('/auth/decode-token', { token });
-      const decodedToken = decodeResponse.data;
-
-      if (decodedToken) {
-        if (decodedToken.admin) {
-          localStorage.setItem('isAdmin', 'true');
-          window.location.href = '/admin-dashboard'; // Redirect to admin dashboard if user is an admin
-        } else {
-          localStorage.setItem('isAdmin', 'false');
-          window.location.href = '/home'; // Redirect to home page if user is not an admin
-        }
+    if (isRegistering) {
+      if (password !== confirmPassword) {
+        setFormState({
+          ...formState,
+          error: 'Passwords do not match.',
+        });
+        return;
       }
-    } catch (error) {
-      setFormState({
-        ...formState,
-        error: 'Invalid credentials. Please try again.',
-      });
+
+      try {
+        await axiosInstance.post('/users', { username, password });
+        setIsRegistering(false);  // Switch to login view after successful registration
+      } catch (error) {
+        setFormState({
+          ...formState,
+          error: 'Registration failed. Please try again.',
+        });
+      }
+    } else {
+      try {
+        const response = await axiosInstance.post('/auth/login', { username, password });
+        const token = response.data.token;
+        localStorage.setItem('token', token);
+
+        // Call backend to decode the JWT token and get user info
+        const decodeResponse = await axiosInstance.post('/auth/decode-token', { token });
+        const decodedToken = decodeResponse.data;
+
+        if (decodedToken) {
+          if (decodedToken.admin) {
+            localStorage.setItem('isAdmin', 'true');
+            window.location.href = '/admin-dashboard';  // Redirect to admin dashboard if user is an admin
+          } else {
+            localStorage.setItem('isAdmin', 'false');
+            window.location.href = '/home';  // Redirect to home page if user is not an admin
+          }
+        }
+      } catch (error) {
+        setFormState({
+          ...formState,
+          error: 'Invalid credentials. Please try again.',
+        });
+      }
     }
   };
 
@@ -65,11 +88,11 @@ const LoginPage: React.FC = () => {
   return (
     <div>
       <h1>TESTVARS FLASHCARDS</h1>
-      <img src="/logo2.jpg" alt="company logo" className="company-logo" />
+
       <div className="login-container">
         <div className="logo-container"></div>
         <div className="login-box">
-          <h1>LOGIN</h1>
+          <h1>{isRegistering ? 'REGISTER' : 'LOGIN'}</h1>
           <form onSubmit={handleSubmit}>
             <div className="input-group">
               <label htmlFor="username">Username</label>
@@ -89,9 +112,27 @@ const LoginPage: React.FC = () => {
                 onChange={handleChange}
               />
             </div>
+            {isRegistering && (
+              <div className="input-group">
+                <label htmlFor="confirmPassword">Confirm Password</label>
+                <input
+                  type="password"
+                  id="confirmPassword"
+                  value={formState.confirmPassword}
+                  onChange={handleChange}
+                />
+              </div>
+            )}
             {formState.error && <p className="error-message">{formState.error}</p>}
-            <button type="submit">Login</button>
+            <button type="submit">{isRegistering ? 'Register' : 'Login'}</button>
           </form>
+          <p>
+            {isRegistering ? (
+              <>Already have an account? <button onClick={() => setIsRegistering(false)}>Login here</button></>
+            ) : (
+              <>Register Here! <button onClick={() => setIsRegistering(true)}>Create Account</button></>
+            )}
+          </p>
         </div>
       </div>
     </div>
